@@ -7,4 +7,4 @@
   Here is how to start the proxy:
   `make`
   Then do
-  `./a.out [Port Number]
+  ```./a.out [Port Number]```
