@@ -23,7 +23,7 @@
 # # rm "t2"
 
 # # # Test 1: Fetch a simple file
-curl -x 127.0.0.1:9052 http://www.cs.tufts.edu/comp/112/index.html > t1_output
+curl -x [IP_ADDRESS] http://www.cs.tufts.edu/comp/112/index.html > t1_output
 curl http://www.cs.tufts.edu/comp/112/index.html > t1
 
 diff t1_output t1

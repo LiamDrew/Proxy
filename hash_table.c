@@ -197,17 +197,13 @@ Entry_T **find_entry_address_in_table(HashTable_T *table, unsigned char *key)
                                   key) == 0);
     }
 
-    // Debug print
-    // printf("\nPROBING RETRIEVAL: i ended up being %d\n\n", i);
     return address;
 }
 
 Entry_T *get_entry_from_table(HashTable_T *table, unsigned char *key)
 {
     Entry_T **address = find_entry_address_in_table(table, key);
-    if (address == NULL)
-    {
-        // printf("The FILE %s DOES NOT already exist in the table.\n", filename);
+    if (address == NULL) {
         return NULL;
     }
 
@@ -221,7 +217,7 @@ bool update_entry_in_table(HashTable_T *table, Entry_T *to_update)
     assert(target != NULL);
 
     // free(target);
-    // Intentionally leaking memory in the hash table because I'm dense
+    // Intentionally leaking memory
     *target = to_update;
     
     return true;
@@ -296,7 +292,7 @@ Entry_T *find_entry_to_delete(HashTable_T *table)
     if (lrr_entry != NULL) {
         return lrr_entry;
     } else {
-        // just delete any old thing
+        // just delete anything, everything was retrieved 0 seconds ago
         return backup;
     }
 

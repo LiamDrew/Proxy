@@ -59,12 +59,8 @@ void put_response_in_cache(Cache_T *cache, char *key, Buffer_T *buf,
     // check if cache is at max capacity
     if (cache->size == cache->capacity) {
 
-        printf("The cache is full\n");
-
-        // TODO: cache is full, kick something out
+        // cache is full, kick something out
         Entry_T *entry = find_entry_to_delete(cache->table);
-
-        printf("Deleting entry: %s\n", entry->key);
 
         delete_entry_from_table(cache->table, entry);
 

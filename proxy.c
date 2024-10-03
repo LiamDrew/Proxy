@@ -22,7 +22,7 @@ Buffer_T *read_get_request(int childfd)
     int i = 0;
     bool prior_CRLF = false;
 
-    // NOTE: I'm going to allocate the buffer on the heap here.
+    // I'm going to allocate the buffer on the heap here.
     // Using calloc to initialize every slot to 0
     char *buf = calloc(BUFSIZE, sizeof(char));
     unsigned long capacity = BUFSIZE;
@@ -71,7 +71,7 @@ Buffer_T *read_get_request(int childfd)
             }
             else
             {
-                printf("Bad formatting\n");
+                printf("Badly formatted GET request\n");
             }
         }
         else
@@ -80,8 +80,6 @@ Buffer_T *read_get_request(int childfd)
         }
     }
 
-    // printf("Proxy received %d bytes: \n\n%s\n", i, buf);
-    // printf("Proxy received %d bytes\n", i);
     Buffer_T *buffer = new_Buffer_T(buf, i);
 
     return buffer;
@@ -189,9 +187,6 @@ char *concat_host_and_port(char *hostname, int portno)
 
 Server_Address_T *parse_get_request(Buffer_T *request)
 {
-    // printf(" HTTP Request:\n\n%s\n", request->buf);
-    // printf("____________________________________\n\n");
-
     // Ensure the request starts with "GET"
     if (!validate_get_request(request->buf))
     {
@@ -301,7 +296,7 @@ int get_max_age(Buffer_T *response)
 
         while (response->buf[i] >= '0' && response->buf[i] <= '9') {
             if (j > 18) {
-                error("cache time way too long\n");
+                error("Valid Cache Time too long\n");
             }
 
             int_buf[j] = response->buf[i];

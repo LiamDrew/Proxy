@@ -2,7 +2,7 @@
 
 #define BUFSIZE 1024
 
-// larger than 10 megabytes
+// MAX filesize is 10MBs
 #define FILESIZE 10000001
 
 typedef struct {
@@ -17,8 +17,6 @@ void free_Server_Address_T(Server_Address_T **server);
 
 Buffer_T *read_get_request(int childfd);
 
-
-// look in the cache
 
 // parse get request for necessary server information
 Server_Address_T *parse_get_request(Buffer_T *request);

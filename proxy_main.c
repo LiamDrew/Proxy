@@ -1,4 +1,3 @@
-// IP address of tufts servers: 10.4.2.20
 #include "proxy.h"
 
 #define CACHE_SIZE 10
@@ -57,7 +56,6 @@ int main(int argc, char **argv)
 
     /* listen: make this socket ready to accept connection requests */
 
-    // NOTE: do we even want to allow any requests to build up?
     if (listen(parentfd, 0) < 0) /* allow 5 requests to queue up */
         perror("ERROR on listen");
 
@@ -66,7 +64,7 @@ int main(int argc, char **argv)
     int clientlen;
     clientlen = sizeof(clientaddr);
 
-    // make a cache of capacity 10
+    // make a cache
     Cache_T *cache = create_cache(CACHE_SIZE);
 
     // The proxy should run indefinitely, per the spec
@@ -117,8 +115,6 @@ int main(int argc, char **argv)
         bool found = find_response_in_cache(cache, host_port);
 
         if (found) {
-            printf(" File in cache\n");
-
             // 1. Response is in the cache
             bool stale = is_entry_stale(cache, host_port);
 
@@ -137,7 +133,6 @@ int main(int argc, char **argv)
                 // Need to get the time that is now
                 time_t current_time = time(NULL);
                 unsigned long now = (unsigned long)current_time;
-                printf("About to updated response in cache\n");
 
                 update_response_in_cache(cache, host_port, response, now, 
                     max_age);
@@ -149,8 +144,6 @@ int main(int argc, char **argv)
 
             else {
                 // 1b. Response is NOT stale
-
-                printf("\n\nResponse is NOT stale\n\n");
                 
                 // NOTE: make sure we update access time here
 
@@ -169,8 +162,6 @@ int main(int argc, char **argv)
         } 
         
         else { // else not found
-
-            printf("Response is NOT in the cache\n\n");
             // 2. Response is NOT in the cache
             Buffer_T *response = get_from_server(server_info, request);
             free_Buffer_T(&request);
